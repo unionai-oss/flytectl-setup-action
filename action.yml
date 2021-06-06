@@ -1,0 +1,11 @@
+name: 'flytectl-setup-action'
+description: >
+   Install and setup flytectl for use in other actions 
+inputs:
+  version:
+    description: 'The version of flytectl to setup.'
+    required: false
+    default: 'latest'
+runs:
+  using: 'node12'
+  main: './dist/main.js'

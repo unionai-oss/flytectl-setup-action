@@ -1,0 +1,34 @@
+{
+  "name": "flytectl-setup-action",
+  "version": "0.0.1",
+  "description": "Install and setup flytectl for use in other actions ",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evalsocket/flytectl-setup-action.git"
+  },
+  "author": "Yuvraj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evalsocket/flytectl-setup-action/issues"
+  },
+  "homepage": "https://github.com/evalsocket/flytectl-setup-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
+    "@actions/io": "^1.0.2",
+    "@actions/tool-cache": "^1.6.1",
+    "@octokit/core": "",
+    "@types/node": "^14.14.35",
+    "child_process": "^1.0.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "esbuild": "^0.12.6",
+    "typescript": "^4.3.2",
+    "eslint": "^7.28.0"
+  }
+}
