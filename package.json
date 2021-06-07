@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evalsocket/flytectl-setup-action.git"
+    "url": "git+https://github.com/unionai/flytectl-setup-action.git"
   },
   "author": "Unionai",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/evalsocket/flytectl-setup-action/issues"
+    "url": "https://github.com/unionai/flytectl-setup-action/issues"
   },
-  "homepage": "https://github.com/evalsocket/flytectl-setup-action#readme",
+  "homepage": "https://github.com/unionai/flytectl-setup-action#readme",
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
