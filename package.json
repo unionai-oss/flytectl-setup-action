@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/evalsocket/flytectl-setup-action.git"
   },
-  "author": "Yuvraj",
+  "author": "Unionai",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/evalsocket/flytectl-setup-action/issues"
