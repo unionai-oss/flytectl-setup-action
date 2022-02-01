@@ -17,7 +17,7 @@ Install specific version of flytectl
 ```yaml
 steps:
   - uses: actions/checkout@v2
-  - uses: unionai/flytectl-setup-action@master
+  - uses: unionai-oss/flytectl-setup-action@master
     with:
       version: '0.2.21' # The version of flytectl to download and use.
   - run: flytectl --help
@@ -27,7 +27,7 @@ Install latest version of flytectl
 ```yaml
 steps:
   - uses: actions/checkout@v2
-  - uses: unionai/flytectl-setup-action@master
+  - uses: unionai-oss/flytectl-setup-action@master
   - run: flytectl --help
 ```
 
@@ -35,7 +35,7 @@ steps:
 ```bash
 steps:
   - uses: actions/checkout@v2
-  - uses: unionai/flytectl-setup-action@master
+  - uses: unionai-oss/flytectl-setup-action@master
   - name: Setup sandbox cluster
     run: flytectl sandbox start
   - name: Setup flytectl config
