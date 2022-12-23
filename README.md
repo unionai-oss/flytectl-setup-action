@@ -31,13 +31,13 @@ steps:
   - run: flytectl --help
 ```
 
-## Getting started Examle
+## Getting started Example
 ```bash
 steps:
   - uses: actions/checkout@v2
   - uses: unionai-oss/flytectl-setup-action@master
-  - name: Setup sandbox cluster
-    run: flytectl sandbox start
+  - name: Setup demo cluster
+    run: flytectl demo start
   - name: Setup flytectl config
     run: flytectl config init
   - name: Register Core example
