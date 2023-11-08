@@ -1,6 +1,6 @@
 # flytectl-setup-action
 
-This action sets up [flytectl](https://docs.flyte.org/projects/flytectl/en/stable/) for use in actions by:
+This action sets up [flytectl](https://docs.flyte.org/projects/flytectl/en/stable/) for use in actions.
 
 ## Usage
 
@@ -33,15 +33,17 @@ steps:
 
 ## Getting started Example
 ```bash
-steps:
-  - uses: actions/checkout@v2
-  - uses: unionai-oss/flytectl-setup-action@master
-  - name: Setup demo cluster
-    run: flytectl demo start
-  - name: Setup flytectl config
-    run: flytectl config init
-  - name: Register Core example
-    run: |
-      FLYTESNACKS_VERSION=$(curl --silent "https://api.github.com/repos/flyteorg/flytectl/releases/latest" | jq -r .tag_name)
-      flytectl register files -p flytesnacks -d development --archive https://github.com/flyteorg/flytesnacks/releases/download/$FLYTESNACKS_VERSION/flytesnacks-core.tgz  --version v1
+name: flytectl-setup-action
+on: [push]
+jobs:
+  install-flytectl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: unionai-oss/flytectl-setup-action@master
+      - name: Setup demo cluster
+        run: flytectl demo start
+      - name: Setup flytectl config
+        run: flytectl config init
+  
 ```
