@@ -17,6 +17,8 @@ jobs:
       - name: Install latest version
         id: test-latest-version
         uses: ./
+      - run: |
+          flytectl version
 
   test-install-pinned-flytectl:
     name: Install pinned version of flytectl
@@ -30,3 +32,5 @@ jobs:
         uses: ./
         with:
           version: 'v0.8.20'
+      - run: |
+          flytectl version
