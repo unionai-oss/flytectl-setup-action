@@ -78,12 +78,9 @@ async function getDownloadURL(version: string): Promise<string | Error> {
   );
   // Filter out releases for which the tags do not have the prefix `flytectl/`
   const filteredReleases = releases.filter((release) => release.tag_name.startsWith('flytectl/'));
-  console.log(`assetName: ${assetName}`)
-  console.log(`version: ${version}`)
   switch (version) {
     case 'latest':
       for (const asset of filteredReleases[0].assets) {
-        console.log(`Asset name: ${asset.name}`);
         if (assetName === asset.name) {
           return asset.browser_download_url;
         }
@@ -106,10 +103,6 @@ async function getDownloadURL(version: string): Promise<string | Error> {
 }
 
 function releaseTagIsVersion(releaseTag: string, version: string): boolean {
-  // Print releasetag and version
-  console.log(`Release tag: ${releaseTag}`);
-  console.log(`Version: ${version}`);
-
   // Remove the prefix `flytectl/` from releaseTag if it exists
   if (releaseTag.indexOf('flytectl/') === 0) {
     releaseTag = releaseTag.slice('flytectl/'.length)
@@ -121,8 +114,6 @@ function releaseTagIsVersion(releaseTag: string, version: string): boolean {
   if (version.indexOf(versionPrefix) === 0) {
     version = version.slice(versionPrefix.length)
   }
-  console.log(`Right before Release tag: ${releaseTag}`);
-  console.log(`Right before Version: ${version}`);
   return releaseTag === version
 }
 
