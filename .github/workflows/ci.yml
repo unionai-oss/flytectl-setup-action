@@ -1,0 +1,38 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test-install-flytectl:
+    name: Install latest version of flytectl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Install latest version
+        id: test-latest-version
+        uses: ./
+      - run: |
+          flytectl version
+          flytectl demo start
+
+  test-install-pinned-flytectl:
+    name: Install pinned version of flytectl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+      - name: Install pinned version
+        id: test-pinned-version
+        uses: ./
+        with:
+          version: 'v0.8.20'
+      - run: |
+          flytectl version
+          flytectl demo start

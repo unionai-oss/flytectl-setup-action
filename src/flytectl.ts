@@ -10,7 +10,7 @@ import { Error, isError } from './error';
 // optionally be specified in the action's version parameter.
 const versionPrefix = "v";
 
-export async function getFlytectl(version: string): Promise<string|Error> {
+export async function getFlytectl(version: string): Promise<string | Error> {
   const binaryPath = tc.find('flytectl', version, os.arch());
   if (binaryPath !== '') {
     core.info(`Found in cache @ ${binaryPath}`);
@@ -20,7 +20,7 @@ export async function getFlytectl(version: string): Promise<string|Error> {
   core.info(`Resolving the download URL for the current platform...`);
   const downloadURL = await getDownloadURL(version);
   if (isError(downloadURL)) {
-      return downloadURL
+    return downloadURL
   }
 
   core.info(`Downloading flytectl version "${version}" from ${downloadURL}`);
@@ -45,7 +45,7 @@ export async function getFlytectl(version: string): Promise<string|Error> {
 
 // getDownloadURL resolves flytectl's Github download URL for the
 // current architecture and platform.
-async function getDownloadURL(version: string): Promise<string|Error> {
+async function getDownloadURL(version: string): Promise<string | Error> {
   let architecture = '';
   switch (os.arch()) {
     case 'x64':
@@ -69,23 +69,25 @@ async function getDownloadURL(version: string): Promise<string|Error> {
 
   const assetName = `flytectl_${platform}_${architecture}.tar.gz`
   const octokit = new Octokit();
-  const {data: releases} = await octokit.request(
+  const { data: releases } = await octokit.request(
     'GET /repos/{owner}/{repo}/releases',
     {
       owner: 'flyteorg',
-      repo: 'flytectl',
+      repo: 'flyte',
     }
   );
+  // Filter out releases for which the tags do not have the prefix `flytectl/`
+  const filteredReleases = releases.filter((release) => release.tag_name.startsWith('flytectl/'));
   switch (version) {
     case 'latest':
-      for (const asset of releases[0].assets) {
+      for (const asset of filteredReleases[0].assets) {
         if (assetName === asset.name) {
           return asset.browser_download_url;
         }
       }
       break;
     default:
-      for (const release of releases) {
+      for (const release of filteredReleases) {
         if (releaseTagIsVersion(release.tag_name, version)) {
           for (const asset of release.assets) {
             if (assetName === asset.name) {
@@ -101,6 +103,11 @@ async function getDownloadURL(version: string): Promise<string|Error> {
 }
 
 function releaseTagIsVersion(releaseTag: string, version: string): boolean {
+  // Remove the prefix `flytectl/` from releaseTag if it exists
+  if (releaseTag.indexOf('flytectl/') === 0) {
+    releaseTag = releaseTag.slice('flytectl/'.length)
+  }
+
   if (releaseTag.indexOf(versionPrefix) === 0) {
     releaseTag = releaseTag.slice(versionPrefix.length)
   }
