@@ -78,10 +78,11 @@ async function getDownloadURL(version: string): Promise<string | Error> {
   );
   // Filter out releases for which the tags do not have the prefix `flytectl/`
   const filteredReleases = releases.filter((release) => release.tag_name.startsWith('flytectl/'));
-  console.log(`Filtered releases: ${filteredReleases}`);
+  console.log(`assetName: ${assetName}`)
   switch (version) {
     case 'latest':
       for (const asset of filteredReleases[0].assets) {
+        console.log(`Asset name: ${asset.name}`);
         if (assetName === asset.name) {
           return asset.browser_download_url;
         }
