@@ -19,6 +19,7 @@ jobs:
         uses: ./
       - run: |
           flytectl version
+          flytectl demo start
 
   test-install-pinned-flytectl:
     name: Install pinned version of flytectl
@@ -34,3 +35,4 @@ jobs:
           version: 'v0.8.20'
       - run: |
           flytectl version
+          flytectl demo start
