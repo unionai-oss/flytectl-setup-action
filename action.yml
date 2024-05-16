@@ -7,5 +7,5 @@ inputs:
     required: false
     default: 'latest'
 runs:
-  using: 'node16'
+  using: 'node18'
   main: './dist/main.js'
