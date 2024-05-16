@@ -111,7 +111,7 @@ function releaseTagIsVersion(releaseTag: string, version: string): boolean {
   console.log(`Version: ${version}`);
 
   // Remove the prefix `flytectl/` from releaseTag if it exists
-  if (releaseTag.indexOf('flytectl/') !== 0) {
+  if (releaseTag.indexOf('flytectl/') === 0) {
     releaseTag = releaseTag.slice('flytectl/'.length)
   }
 
