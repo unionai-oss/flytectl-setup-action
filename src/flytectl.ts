@@ -121,6 +121,8 @@ function releaseTagIsVersion(releaseTag: string, version: string): boolean {
   if (version.indexOf(versionPrefix) === 0) {
     version = version.slice(versionPrefix.length)
   }
+  console.log(`Right before Release tag: ${releaseTag}`);
+  console.log(`Right before Version: ${version}`);
   return releaseTag === version
 }
 
