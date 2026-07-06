@@ -9,6 +9,17 @@ import { Error, isError } from './error';
 // versionPrefix is used in Github release names, and can
 // optionally be specified in the action's version parameter.
 const versionPrefix = "v";
+const releasesPerPage = 100;
+
+interface ReleaseAsset {
+  name: string;
+  browser_download_url: string;
+}
+
+interface Release {
+  tag_name: string;
+  assets: ReleaseAsset[];
+}
 
 export async function getFlytectl(version: string): Promise<string | Error> {
   const binaryPath = tc.find('flytectl', version, os.arch());
@@ -69,13 +80,7 @@ async function getDownloadURL(version: string): Promise<string | Error> {
 
   const assetName = `flytectl_${platform}_${architecture}.tar.gz`
   const octokit = new Octokit();
-  const { data: releases } = await octokit.request(
-    'GET /repos/{owner}/{repo}/releases',
-    {
-      owner: 'flyteorg',
-      repo: 'flyte',
-    }
-  );
+  const releases = await getAllFlyteReleases(octokit);
   // Filter out releases for which the tags do not have the prefix `flytectl/`
   const filteredReleases = releases.filter((release) => release.tag_name.startsWith('flytectl/'));
   switch (version) {
@@ -102,6 +107,29 @@ async function getDownloadURL(version: string): Promise<string | Error> {
   };
 }
 
+async function getAllFlyteReleases(octokit: Octokit): Promise<Release[]> {
+  const releases: Release[] = [];
+  let page = 1;
+
+  for (;;) {
+    const response = await octokit.request('GET /repos/{owner}/{repo}/releases', {
+      owner: 'flyteorg',
+      repo: 'flyte',
+      per_page: releasesPerPage,
+      page,
+    });
+    const currentPageReleases = response.data as Release[];
+
+    releases.push(...currentPageReleases);
+    if (currentPageReleases.length < releasesPerPage) {
+      break;
+    }
+    page += 1;
+  }
+
+  return releases;
+}
+
 function releaseTagIsVersion(releaseTag: string, version: string): boolean {
   // Remove the prefix `flytectl/` from releaseTag if it exists
   if (releaseTag.indexOf('flytectl/') === 0) {
@@ -116,4 +144,3 @@ function releaseTagIsVersion(releaseTag: string, version: string): boolean {
   }
   return releaseTag === version
 }
-
